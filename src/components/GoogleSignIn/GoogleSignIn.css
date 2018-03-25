@@ -1,0 +1,22 @@
+.google-login-page {
+  background-image:  url('Supermarket.jpg');
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+  height:100vh;
+  position: relative;
+}
+
+.google-login-button-container {
+  position: absolute;
+  top: 40%;
+  right:50vw;
+  transform: translateX(+50%);
+  text-align: center;
+}
+
+.logo {
+  font-size: 36px;
+  margin-bottom: 10px;
+  text-align: center;
+}
