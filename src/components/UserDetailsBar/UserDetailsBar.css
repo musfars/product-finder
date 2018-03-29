@@ -1,0 +1,22 @@
+.bar-container {
+  text-align: center;
+  margin: 8px 0px;
+  height: 50px;
+}
+
+.header-text{
+  display: inline-block;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 60px;
+}
+
+.image-container {
+  float: right;
+  margin: 0px 16px;
+}
+
+.header-google-userimage {
+    border-radius: 50%;
+    width: 50px;
+}

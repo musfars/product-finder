@@ -5,7 +5,8 @@ import {
   Switch
 } from 'react-router-dom';
 import GoogleSignIn from '../GoogleSignIn';
-import AlexaListing from '../AlexaListing';
+import AlexaListingPage from '../AlexaListingPage';
+import ProductListingPage from '../ProductListingPage';
 
 class SiteLayout extends Component {
   render() {
@@ -13,9 +14,10 @@ class SiteLayout extends Component {
       <Router>
         <Switch>
           <Route exact path='/'
-            component={()=>(<GoogleSignIn/>)} />
+            component={() => (<GoogleSignIn />)} />
           <Route path='/home'
-            component={()=>(<AlexaListing/>)} />
+            component={() => (<AlexaListingPage />)} />
+          <Route path='/details/:id' component={() => (<ProductListingPage/>)} />
         </Switch>
       </Router>
     );

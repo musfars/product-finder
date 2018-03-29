@@ -1,2 +1,10 @@
 import { combineReducers } from 'redux';
- export default combineReducers;
+import userDetails from './userDetails';
+import alexaListing from './alexaListing';
+import productListing from './productListing';
+
+export default combineReducers({
+  userDetails,
+  alexaListing,
+  productListing
+});

@@ -6,15 +6,15 @@ import './App.css';
 import {Provider} from 'react-redux';
 import configureStore from '../store';
 
-// const store = configureStore();
+const store = configureStore();
 class App extends Component {
   render() {
     return (
-      // <Provider store={store}>
-      //   <LocaleProvider locale={enUS}>
+      <Provider store={store}>
+        <LocaleProvider locale={enUS}>
           <SiteLayout/>
-      //   </LocaleProvider>
-      // </Provider>
+        </LocaleProvider>
+      </Provider>
     );
   }
 }
