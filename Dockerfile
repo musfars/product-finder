@@ -10,6 +10,7 @@ COPY package.json /product-finder-alexa
 RUN npm install
 # Bundle app source
 COPY . /product-finder-alexa
+RUN npm run build-prod
 
-EXPOSE 3000
-CMD [ "npm","start"]
+EXPOSE 7002
+CMD ["node","server"]

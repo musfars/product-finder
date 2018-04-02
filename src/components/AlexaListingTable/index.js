@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import EditableCell from '../EditableCell';
 import { Button, Table} from 'antd';
+import { connect } from 'react-redux';
+import { editDeviceName } from '../../actions/editDeviceName';
 import './alexa-listing-table.css';
 
 class AlexaListingTable extends Component {
@@ -45,6 +47,8 @@ class AlexaListingTable extends Component {
       if (target) {
         target[dataIndex] = value;
         this.setState({ dataSource });
+        const deviceId = target['deviceId'];
+        this.props.editDeviceName(deviceId,value);
       }
     };
   }
@@ -62,4 +66,12 @@ class AlexaListingTable extends Component {
   }
 }
 
-export default AlexaListingTable;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    editDeviceName: (deviceId, value) => {
+      dispatch(editDeviceName(deviceId, value))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(AlexaListingTable);

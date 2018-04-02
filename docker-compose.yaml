@@ -6,9 +6,10 @@ services:
     container_name: productfinder-alexa
     build: . # specify the directory of the Dockerfile
     ports:
-      - "7002:3000"
-    mem_limit: 1024m
+      - "7002:7002"
     networks:
       - productfinder-network
+    environment: 
+      NODE_ENV: "staging"  
 networks:
   productfinder-network:
