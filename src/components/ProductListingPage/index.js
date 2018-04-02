@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { listProductDetails } from '../../actions/listProductDetails';
+import UserDetailsBar from '../UserDetailsBar';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProductListingTable from '../ProductListingTable';
@@ -20,6 +21,8 @@ class ProductListingPage extends Component {
     else {
       return (
         <div className="ProductDetails">
+          <UserDetailsBar userName={this.props.userDetails.userName}
+            userImage={this.props.userDetails.imageUrl} />
           <ProductListingTable data={this.props.productListing}/>
           <AddProduct deviceId={this.deviceId}/>
         </div>

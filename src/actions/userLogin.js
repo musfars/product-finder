@@ -17,7 +17,7 @@ const setUserToken = () => {
   };
 };
 
-export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome) => {
+export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, params) => {
   return (dispatch) => {
     axios.post(url + '/user/login?tokenId=' +
       googleResponse.tokenId +
@@ -31,6 +31,9 @@ export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome) =
           };
           saveUserDetails(response.data.token, userDetails);
           // dispatch(setUserToken());
+          window.location = `${params.redirect_uri}?state=${params.state}&
+                              acess_token=${response.data.token}&
+                              token_type=BearerToken`;
           dispatch(userLogInStatus());
           routeToHome.push('/home');
         }

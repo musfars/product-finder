@@ -13,12 +13,29 @@ class GoogleSignIn extends Component {
     super(props);
     this.responseGoogle = this.responseGoogle.bind(this);
     this.info = this.info.bind(this);
+    this.getSearchParameters = this.getSearchParameters.bind(this);
+    this.transformToAssocArray = this.transformToAssocArray.bind(this);
   }
 
   responseGoogle(response) {
     const alexaId = '';
-    this.props.fetchUserToken(response, alexaId, this.info, this.props.history);
+    this.props.fetchUserToken(response, alexaId, this.info, this.props.history, this.params);
   }
+
+  getSearchParameters() {
+      var prmstr = window.location.search.substr(1);
+      return prmstr != null && prmstr != "" ? this.transformToAssocArray(prmstr) : {};
+  }
+
+  transformToAssocArray( prmstr ) {
+    var params = {};
+    var prmarr = prmstr.split("&");
+    for ( var i = 0; i < prmarr.length; i++) {
+        var tmparr = prmarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
+    }
+    return params;
+}
 
   info() {
     Modal.info({
@@ -30,6 +47,10 @@ class GoogleSignIn extends Component {
       ),
       onOk() { },
     });
+  }
+
+  componentDidMount() {
+    this.params = this.getSearchParameters() || null;
   }
 
   render() {
@@ -58,8 +79,8 @@ class GoogleSignIn extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchUserToken: (googleResponse, alexaId, showInfo, routeToHome) => {
-      dispatch(fetchUserToken(googleResponse, alexaId, showInfo, routeToHome))
+    fetchUserToken: (googleResponse, alexaId, showInfo, routeToHome, params) => {
+      dispatch(fetchUserToken(googleResponse, alexaId, showInfo, routeToHome, params))
     }
   }
 }
