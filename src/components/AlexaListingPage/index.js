@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UserDetailsBar from '../UserDetailsBar';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { userLogInStatus } from '../../actions/userLogin';
 import { listAlexa } from '../../actions/listAlexa';
 import AlexaListingTable from '../AlexaListingTable';
@@ -13,13 +14,20 @@ class AlexaListingPage extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <UserDetailsBar userName={this.props.userDetails.userName}
-          userImage={this.props.userDetails.imageUrl} />
-        <AlexaListingTable alexaListing={this.props.alexaListing} />
-      </div>
-    )
+    if (!this.props.userDetails.loginStatus) {
+      return (
+        <Redirect to='/' />
+      )
+    }
+    else {
+      return (
+        <div>
+          <UserDetailsBar userName={this.props.userDetails.userName}
+            userImage={this.props.userDetails.imageUrl} />
+          <AlexaListingTable alexaListing={this.props.alexaListing} />
+        </div>
+      )
+    }
   }
 }
 

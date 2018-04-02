@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EditableCell from '../EditableCell';
 import { Button, Table} from 'antd';
+import './alexa-listing-table.css';
 
 class AlexaListingTable extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class AlexaListingTable extends Component {
   render() {
     const columns = this.columns;
     return (
-      <div>
+      <div className='alexa-listing-table'>
         <Table bordered dataSource={this.state.dataSource} columns={columns}
           title={() => <div style={{ textAlign: 'center', fontWeight: 'bold' }}>List of Alexa Devices</div>}
           pagination={false}

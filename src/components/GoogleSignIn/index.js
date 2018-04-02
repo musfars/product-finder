@@ -3,8 +3,10 @@ import GoogleLogin from 'react-google-login';
 import { withRouter, Redirect } from 'react-router-dom';
 import { fetchUserToken } from '../../actions/userLogin';
 import { connect } from 'react-redux';
-import Modal from 'antd/lib/modal';
+import { Modal, Spin, Icon } from 'antd';
 import './GoogleSignIn.css';
+
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 class GoogleSignIn extends Component {
   constructor(props) {

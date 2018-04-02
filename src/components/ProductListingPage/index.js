@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { listProductDetails } from '../../actions/listProductDetails';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProductListingTable from '../ProductListingTable';
 import AddProduct from '../AddProduct';
@@ -12,12 +12,19 @@ class ProductListingPage extends Component {
   }
 
   render() {
-    return (
-      <div className="ProductDetails">
-        <ProductListingTable data={this.props.productListing}/>
-        <AddProduct deviceId={this.deviceId}/>
-      </div>
-    )
+    if (!this.props.userDetails.loginStatus) {
+      return (
+        <Redirect to='/' />
+      )
+    }
+    else {
+      return (
+        <div className="ProductDetails">
+          <ProductListingTable data={this.props.productListing}/>
+          <AddProduct deviceId={this.deviceId}/>
+        </div>
+      )
+    }
   }
 }
 
@@ -31,7 +38,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    productListing: state.productListing
+    productListing: state.productListing,
+    userDetails: state.userDetails
   }
 }
 

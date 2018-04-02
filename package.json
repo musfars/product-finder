@@ -18,6 +18,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-prod": "run-s build deploy-prod",
+    "deploy-prod": "node server &",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

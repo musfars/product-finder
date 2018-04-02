@@ -1,3 +1,1 @@
-module.exports = {
-baseUrl : 'http://10.4.6.37:8001'
-}
+module.exports = require(`./${process.env.NODE_ENV}/app`).instance;

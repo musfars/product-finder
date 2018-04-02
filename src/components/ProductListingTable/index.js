@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Input } from 'antd';
+import './product-listing-table.css'
 
 const EditableCell = ({ editable, value, onChange }) => (
   <div>
@@ -16,13 +17,13 @@ class ProductListingTable extends Component {
     this.columns = [{
       title: 'Product ID',
       dataIndex: 'productId',
-      width: '10%',
+      width: '15%',
       align: 'center',
       render: (text, record) => this.renderColumns(text, record, 'productId'),
     }, {
       title: 'Product Name',
       dataIndex: 'name',
-      width: '25%',
+      width: '30%',
       align: 'center',
       render: (text, record) => this.renderColumns(text, record, 'name'),
     }, {
@@ -110,8 +111,14 @@ class ProductListingTable extends Component {
   }
 
   render() {
-    return <Table bordered dataSource={this.state.data} columns={this.columns}
-      title={() => <div style={{ textAlign: 'center', fontWeight: 'bold' }}>List of Products</div>} pagination={false}/>;
+    return(
+      <div className='product-listing-table'>
+        <Table bordered dataSource={this.state.data} columns={this.columns}
+          title={() => <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+          List of Products
+          </div>} pagination={false}/>
+      </div>
+    )
   }
 }
 

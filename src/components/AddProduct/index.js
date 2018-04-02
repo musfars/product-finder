@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form, Input } from 'antd';
 import { addProductToList } from '../../actions/addProduct';
 import { connect } from 'react-redux';
+import './add-product.css';
 const FormItem = Form.Item;
 
 const CollectionCreateForm = Form.create()(
@@ -81,7 +82,9 @@ class AddProduct extends Component {
   render() {
     return (
       <div>
-        <Button type="primary" onClick={this.showModal} style={{ marginTop: '16px' }}>Add Product</Button>
+        <div className='add-product-button'>
+          <Button type="primary" onClick={this.showModal}>Add Product</Button>
+        </div>  
         <CollectionCreateForm
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.visible}
