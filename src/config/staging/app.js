@@ -5,7 +5,7 @@ const DevelopmentConfig = require('../development/app').clazz;
 class StagingConfig extends DevelopmentConfig {
   constructor() {
     super();
-    this.baseUrl = 'http://productfinder.qburst.build:7001';
+    this.baseUrl = 'https://productfinderapi.qburst.build';
   }
 }
 
