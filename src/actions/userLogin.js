@@ -31,11 +31,15 @@ export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, p
           };
           saveUserDetails(response.data.token, userDetails);
           // dispatch(setUserToken());
-          window.location = `${params.redirect_uri}?state=${params.state}&
-                              acess_token=${response.data.token}&
-                              token_type=BearerToken`;
-          dispatch(userLogInStatus());
-          routeToHome.push('/home');
+          if(params) {
+            window.location = `https://pitangui.amazon.com/spa/skill/account-linking-status.html?vendorId=M3M8WGSF7SN4IE&state=${params.state}&
+                                acess_token=${response.data.token}&
+                                token_type=BearerToken`;
+          }
+          else {
+            dispatch(userLogInStatus());
+            routeToHome.push('/home');
+          }
         }
         else if (response.data.status === 403) {
           showInfo();
