@@ -19,7 +19,7 @@ class GoogleSignIn extends Component {
 
   responseGoogle(response) {
     const alexaId = '';
-    this.props.fetchUserToken(response, alexaId, this.info, this.props.history, this.params);
+    this.props.fetchUserToken(response, alexaId, this.info, this.props.history, this.alexaParams);
   }
 
   getSearchParameters() {
@@ -50,7 +50,7 @@ class GoogleSignIn extends Component {
   }
 
   componentDidMount() {
-    this.params = this.getSearchParameters() || null;
+    this.alexaParams = this.getSearchParameters() || null;
   }
 
   render() {
@@ -79,8 +79,8 @@ class GoogleSignIn extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchUserToken: (googleResponse, alexaId, showInfo, routeToHome, params) => {
-      dispatch(fetchUserToken(googleResponse, alexaId, showInfo, routeToHome, params))
+    fetchUserToken: (googleResponse, alexaId, showInfo, routeToHome, alexaParams) => {
+      dispatch(fetchUserToken(googleResponse, alexaId, showInfo, routeToHome, alexaParams))
     }
   }
 }

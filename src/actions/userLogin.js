@@ -17,44 +17,42 @@ const setUserToken = () => {
   };
 };
 
-export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, params) => {
+export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, alexaParams) => {
   return (dispatch) => {
     axios.post(url + '/user/login?tokenId=' +
       googleResponse.tokenId +
       '&alexaId=' + alexaId)
-      .then((response) => {
-        if (response.data.status === 200) {
-          const userDetails = {
-            userId: response.data.userId,
-            userName: googleResponse.profileObj.name,
-            imageUrl: googleResponse.profileObj.imageUrl
-          };
-          saveUserDetails(response.data.token, userDetails);
-          // dispatch(setUserToken());
-          if(params) {
-            window.location = `https://pitangui.amazon.com/spa/skill/account-linking-status.html?vendorId=M3M8WGSF7SN4IE&state=${params.state}&
-                                acess_token=${response.data.token}&
-                                token_type=BearerToken`;
-          }
-          else {
-            dispatch(userLogInStatus());
-            routeToHome.push('/home');
-          }
-        }
-        else if (response.data.status === 403) {
-          showInfo();
-        }
-      })
-      .catch(() => {
-        console.error('Google Login Failed');
-      });
-  };
+    .then((response) => {
+    if (response.data.status === 200) {
+      // dispatch(setUserToken());
+      if (Object.keys(alexaParams).length !== 0) {
+        window.location = "https://www.google.co.in";
+      }
+      else {
+        const userDetails = {
+          userId: response.data.userId,
+          userName: googleResponse.profileObj.name,
+          imageUrl: googleResponse.profileObj.imageUrl
+        };
+        saveUserDetails(response.data.token, userDetails);
+        dispatch(userLogInStatus());
+        routeToHome.push('/home');
+      }
+    }
+    else if (response.data.status === 403) {
+      showInfo();
+    }
+  })
+    .catch(() => {
+      console.error('Google Login Failed');
+    });
+};
 };
 
-export const userLogInStatus = () => { 
+export const userLogInStatus = () => {
   return {
-  type: 'USER_LOGGED_IN',
-  ...loadUserState()
+    type: 'USER_LOGGED_IN',
+    ...loadUserState()
   }
 };
 
