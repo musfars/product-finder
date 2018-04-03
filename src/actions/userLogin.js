@@ -26,9 +26,7 @@ export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, a
     if (response.data.status === 200) {
       // dispatch(setUserToken());
       if (Object.keys(alexaParams).length !== 0) {
-        const redirect_url = decodeURIComponent(`${alexaParams.redirect_uri}&state=${alexaParams.state}&access_token=${response.data.token}&token_type=BearerToken`)
-        console.log("REDIRECT", redirect_url);
-        window.location = redirect_url;
+        window.location = decodeURIComponent(`${alexaParams.redirect_uri}&state=${alexaParams.state}&access_token=${response.data.token}&token_type=BearerToken`);
       }
       else {
         const userDetails = {
