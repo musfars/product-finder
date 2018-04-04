@@ -23,30 +23,34 @@ export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, a
       googleResponse.tokenId +
       '&alexaId=' + alexaId)
     .then((response) => {
-    if (response.data.status === 200) {
+      if (response.data.status === 200 || Object.keys(alexaParams).length !== 0) {
       // dispatch(setUserToken());
-      if (Object.keys(alexaParams).length !== 0) {
-        window.location = decodeURIComponent(`${alexaParams.redirect_uri}#access_token=${response.data.token}&state=${alexaParams.state}&token_type=BearerToken`);
+        if (Object.keys(alexaParams).length !== 0) {
+          console.log('acess-token', response.data.token)
+          window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
+          `#access_token=${response.data.token}` +
+          `&state=${alexaParams.state}` +
+          `&token_type=BearerToken`);
+        }
+        else {
+          const userDetails = {
+            userId: response.data.userId,
+            userName: googleResponse.profileObj.name,
+            imageUrl: googleResponse.profileObj.imageUrl
+          };
+          saveUserDetails(response.data.token, userDetails);
+          dispatch(userLogInStatus());
+          routeToHome.push('/home');
+        }
       }
-      else {
-        const userDetails = {
-          userId: response.data.userId,
-          userName: googleResponse.profileObj.name,
-          imageUrl: googleResponse.profileObj.imageUrl
-        };
-        saveUserDetails(response.data.token, userDetails);
-        dispatch(userLogInStatus());
-        routeToHome.push('/home');
+      else if (response.data.status === 403) {
+        showInfo();
       }
-    }
-    else if (response.data.status === 403) {
-      showInfo();
-    }
-  })
+    })
     .catch(() => {
       console.error('Google Login Failed');
     });
-};
+  };
 };
 
 export const userLogInStatus = () => {
