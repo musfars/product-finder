@@ -25,12 +25,14 @@ export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, a
     .then((response) => {
       if (response.data.status === 200 || Object.keys(alexaParams).length !== 0) {
         if (Object.keys(alexaParams).length !== 0) {
-          window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
-          `#access_token=${response.data.token}` +
-          `&state=${alexaParams.state}` +
-          `&token_type=BearerToken`);
+          console.log('TOKEN', response.data.token )
+          // window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
+          // `#access_token=${response.data.token}` +
+          // `&state=${alexaParams.state}` +
+          // `&token_type=BearerToken`);
         }
         else {
+          console.log('TOKEN', response.data.token)
           const userDetails = {
             userId: response.data.userId,
             userName: googleResponse.profileObj.name,
