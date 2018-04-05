@@ -25,13 +25,13 @@ export const fetchUserToken = (googleResponse, showInfo, routeToHome, alexaParam
         isAlexa
       })
     .then((response) => {
-      console.log(response);
       if (response.data.status === 200 || isAlexa) {
         if (isAlexa) {
-          window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
-          `#access_token=${response.data.token}` +
-          `&state=${alexaParams.state}` +
-          `&token_type=BearerToken`);
+          // window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
+          // `#access_token=${response.data.token}` +
+          // `&state=${alexaParams.state}` +
+          // `&token_type=BearerToken`);
+          console.log(response);
         }
         else {
           const userDetails = {
