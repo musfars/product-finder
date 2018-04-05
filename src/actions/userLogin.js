@@ -19,11 +19,13 @@ const setUserToken = () => {
 
 export const fetchUserToken = (googleResponse, showInfo, routeToHome, alexaParams) => {
   return (dispatch) => {
-    const isAlexa = Object.keys(alexaParams).length !== 0 ? true : false;
-    axios.post(url + '/user/login?tokenId=' +
-      googleResponse.tokenId +
-      '&isAlexa=' + isAlexa)
+    var isAlexa = Object.keys(alexaParams).length !== 0 ? true : false;
+    axios.post(url + '/user/login', {
+        tokenId: googleResponse.tokenId,
+        isAlexa
+      })
     .then((response) => {
+      console.log(response);
       if (response.data.status === 200 || isAlexa) {
         if (isAlexa) {
           window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
