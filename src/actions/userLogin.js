@@ -17,22 +17,21 @@ const setUserToken = () => {
   };
 };
 
-export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, alexaParams) => {
+export const fetchUserToken = (googleResponse, showInfo, routeToHome, alexaParams) => {
   return (dispatch) => {
+    const isAlexa = Object.keys(alexaParams).length !== 0 ? true : false;
     axios.post(url + '/user/login?tokenId=' +
       googleResponse.tokenId +
-      '&alexaId=' + alexaId)
+      '&isAlexa=' + isAlexa)
     .then((response) => {
-      if (response.data.status === 200 || Object.keys(alexaParams).length !== 0) {
-        if (Object.keys(alexaParams).length !== 0) {
-          console.log('TOKEN', response.data.token )
+      if (response.data.status === 200 || isAlexa) {
+        if (isAlexa) {
           // window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
           // `#access_token=${response.data.token}` +
           // `&state=${alexaParams.state}` +
           // `&token_type=BearerToken`);
         }
         else {
-          console.log('TOKEN', response.data.token)
           const userDetails = {
             userId: response.data.userId,
             userName: googleResponse.profileObj.name,

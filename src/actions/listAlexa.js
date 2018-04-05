@@ -18,6 +18,7 @@ export const listAlexa = (userId) => {
       dispatch(fetchListSuccess(response.data.deviceList));
     })
     .catch((error) => {
+      console.log(error)
       dispatch(fetchListFailure());
     });
   }
