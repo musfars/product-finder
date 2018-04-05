@@ -23,18 +23,19 @@ class ProductListingTable extends Component {
     }, {
       title: 'Product Name',
       dataIndex: 'name',
-      width: '30%',
+      width: '25%',
       align: 'center',
       render: (text, record) => this.renderColumns(text, record, 'name'),
     }, {
       title: 'Location',
       dataIndex: 'location',
       align: 'center',
-      width: '40%',
+      width: '45%',
       render: (text, record) => this.renderColumns(text, record, 'location'),
     }, {
       title: 'Operation',
       dataIndex: 'operation',
+      width: '15%',
       align: 'center',
       render: (text, record) => {
         const { editable } = record;

@@ -25,6 +25,7 @@ class AlexaListingTable extends Component {
       align: 'center',
     }, {
       title: 'Explore ',
+      width: '15%',
       align: 'center',
       render: ({ deviceId }) => <Button icon="folder-open" href={`/details/${deviceId}`} />
     }];
@@ -58,7 +59,7 @@ class AlexaListingTable extends Component {
     return (
       <div className='alexa-listing-table'>
         <Table bordered dataSource={this.state.dataSource} columns={columns}
-          title={() => <div style={{ textAlign: 'center', fontWeight: 'bold' }}>List of Alexa Devices</div>}
+          title={() => <div style={{ fontSize:'20px', fontWeight: 'bold' }}>Alexa Devices List</div>}
           pagination={false}
         />
       </div>

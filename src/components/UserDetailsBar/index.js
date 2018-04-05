@@ -3,6 +3,7 @@ import { Popover, Button } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { logOutUser } from '../../actions/userLogin';
 import { connect } from 'react-redux';
+import bag from './bag.svg';
 import './UserDetailsBar.css';
 
 class UserDetailsBar extends Component {
@@ -27,18 +28,24 @@ class UserDetailsBar extends Component {
     );
     return (
       <div className='bar-container'>
-        <div className='header-text'>PRODUCT FINDER</div>
-        <Popover
-          placement='bottom'
-          title={popTitle}
-          content={popContent}
-          trigger='click'>
-          <div className='image-container'>
-            <img className='header-google-userimage'
-            src={this.props.userImage}
-            alt='Profile'/>
-          </div>
-        </Popover>
+        <div className='header-logo'>
+          <img src={bag} className='bag-image-header' />
+          <div className='header-text'>Alexa product finder</div>
+        </div> 
+        <div className='header-user'>
+          <div className='user-name'>{this.props.userName}</div>
+          <Popover
+            placement='bottom'
+            title={popTitle}
+            content={popContent}
+            trigger='click'>
+            <div className='image-container'>
+              <img className='header-google-userimage'
+              src={this.props.userImage}
+              alt='Profile'/>
+            </div>
+          </Popover>
+        </div>
       </div>
     )
   }

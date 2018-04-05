@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Questrial');
+
+* {
+  font-family:  'Questrial', sans-serif;
+}
+
 .product-listing-table {
-  margin: 48px 48px;
+  margin: 16px 214px;
 }

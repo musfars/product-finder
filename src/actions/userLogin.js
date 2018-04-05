@@ -24,13 +24,11 @@ export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, a
       '&alexaId=' + alexaId)
     .then((response) => {
       if (response.data.status === 200 || Object.keys(alexaParams).length !== 0) {
-      // dispatch(setUserToken());
         if (Object.keys(alexaParams).length !== 0) {
-          console.log('acess-token', response.data.token)
-          // window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
-          // `#access_token=${response.data.token}` +
-          // `&state=${alexaParams.state}` +
-          // `&token_type=BearerToken`);
+          window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
+          `#access_token=${response.data.token}` +
+          `&state=${alexaParams.state}` +
+          `&token_type=BearerToken`);
         }
         else {
           const userDetails = {
@@ -40,6 +38,7 @@ export const fetchUserToken = (googleResponse, alexaId, showInfo, routeToHome, a
           };
           saveUserDetails(response.data.token, userDetails);
           dispatch(userLogInStatus());
+          // dispatch(setUserToken());
           routeToHome.push('/home');
         }
       }

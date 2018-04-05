@@ -8,4 +8,4 @@ class DevelopmentConfig {
 module.exports = {
   clazz: DevelopmentConfig,
   instance: new DevelopmentConfig()
-};
+};  

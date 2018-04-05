@@ -4,6 +4,7 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { fetchUserToken } from '../../actions/userLogin';
 import { connect } from 'react-redux';
 import { Modal, Spin, Icon } from 'antd';
+import bag from './bag.svg';
 import './GoogleSignIn.css';
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
@@ -63,13 +64,15 @@ class GoogleSignIn extends Component {
       return(
         <div className='google-login-page'>
           <div className='google-login-button-container'>
-            <div className='logo'>PRODUCT FINDER</div>
-            <GoogleLogin
-              clientId="957468791003-slgmb2r2jsm6gvq88prst0evqvqb6o1n.apps.googleusercontent.com"
-              buttonText="Login via Google"
-              onSuccess={this.responseGoogle}
-              onFailure={this.responseGoogle}
-            />
+            <img src={bag} className='bag-image'/>
+            <div className='title'>Alexa product finder</div>
+              <GoogleLogin
+                className='google-login-button'
+                clientId="957468791003-slgmb2r2jsm6gvq88prst0evqvqb6o1n.apps.googleusercontent.com"
+                buttonText="Sign in with Google"
+                onSuccess={this.responseGoogle}
+                onFailure={this.responseGoogle}
+              />
           </div>
         </div>
       )
