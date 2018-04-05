@@ -24,6 +24,7 @@ export const fetchUserToken = (googleResponse, showInfo, routeToHome, alexaParam
       googleResponse.tokenId +
       '&isAlexa=' + isAlexa)
     .then((response) => {
+      console.log('Token', response.data.token);
       if (response.data.status === 200 || isAlexa) {
         if (isAlexa) {
           // window.location = decodeURIComponent(`${alexaParams.redirect_uri}` +
