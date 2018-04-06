@@ -71,7 +71,8 @@ class AddProduct extends Component {
           "location": values.location
         }
       }
-      this.props.addProductToList(productData);
+      const token = this.props.userToken;
+      this.props.addProductToList(productData, token);
       form.resetFields();
       this.setState({ visible: false });
     });
@@ -98,10 +99,16 @@ class AddProduct extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addProductToList: (productData) => {
-      dispatch(addProductToList(productData))
+    addProductToList: (productData, token) => {
+      dispatch(addProductToList(productData, token))
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(AddProduct);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    userToken: state.userToken
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddProduct);

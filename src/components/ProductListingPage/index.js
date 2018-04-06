@@ -23,7 +23,7 @@ class ProductListingPage extends Component {
         <div className="ProductDetails">
           <UserDetailsBar userName={this.props.userDetails.userName}
             userImage={this.props.userDetails.imageUrl} />
-          <ProductListingTable data={this.props.productListing}/>
+          <ProductListingTable data={this.props.productListing} deviceId={this.deviceId}/>
           <AddProduct deviceId={this.deviceId}/>
         </div>
       )

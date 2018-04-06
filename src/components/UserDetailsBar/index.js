@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Popover, Button } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { logOutUser } from '../../actions/userLogin';
+import { setUserToken } from '../../actions/userLogin';
 import { connect } from 'react-redux';
 import bag from './bag.svg';
 import './UserDetailsBar.css';
@@ -10,6 +11,9 @@ class UserDetailsBar extends Component {
   constructor() {
     super();
     this.logOutUser = this.logOutUser.bind(this);
+  }
+  componentDidMount(){
+    this.props.setUserToken();
   }
   logOutUser() {
     this.props.logOutUser();
@@ -54,8 +58,11 @@ class UserDetailsBar extends Component {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     logOutUser: () => {
-      dispatch(logOutUser)
-    }
+      dispatch(logOutUser())
+    },
+    setUserToken: () => {
+      dispatch(setUserToken())
+    } 
   }
 }
 

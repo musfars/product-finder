@@ -1,4 +1,5 @@
 import axios from 'axios';
+import returnHeader from '../utils/returnHeader';
 const Config = require('../config');
 const url = Config.baseUrl;
 
@@ -10,12 +11,14 @@ const editDeviceNameSuccess = () => ({
   type: 'EDIT_DEVICE_NAME_SUCCESS'
 });
 
-export const editDeviceName = (deviceId, value) => {
+export const editDeviceName = (deviceId, value, token) => {
   return (dispatch) => {
-    axios.post(url + '/device/edit',{
+    axios.put(url + '/device/edit',{
       "deviceId": deviceId,
       "name": value
-    })
+    },
+    returnHeader(token)
+  )
       .then((response) => {
         dispatch(editDeviceNameSuccess());
       })

@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Input } from 'antd';
+import { Table, Input, Button, Popconfirm } from 'antd';
+import { connect } from 'react-redux';
+import { editProductLocation } from '../../actions/editProductLocation';
+import { deleteProduct } from '../../actions/deleteProduct'; 
+import EditableCell from '../EditableCell';
 import './product-listing-table.css'
-
-const EditableCell = ({ editable, value, onChange }) => (
-  <div>
-    {editable
-      ? <Input style={{ margin: '-5px 0' }} value={value} onChange={e => onChange(e.target.value)} />
-      : value
-    }
-  </div>
-);
 
 class ProductListingTable extends Component {
   constructor(props) {
@@ -18,104 +13,71 @@ class ProductListingTable extends Component {
       title: 'Product ID',
       dataIndex: 'productId',
       width: '15%',
-      align: 'center',
-      render: (text, record) => this.renderColumns(text, record, 'productId'),
+      align: 'center'
     }, {
       title: 'Product Name',
       dataIndex: 'name',
-      width: '25%',
+      width: '30%',
       align: 'center',
-      render: (text, record) => this.renderColumns(text, record, 'name'),
     }, {
       title: 'Location',
       dataIndex: 'location',
       align: 'center',
-      width: '45%',
-      render: (text, record) => this.renderColumns(text, record, 'location'),
+      width: '40%',
+      render: (text, record) => (
+        <EditableCell
+          value={text}
+          onChange={this.onCellChange(record.key, 'location')}
+        />
+      )
     }, {
-      title: 'Operation',
-      dataIndex: 'operation',
-      width: '15%',
+      title: 'Actions',
       align: 'center',
-      render: (text, record) => {
-        const { editable } = record;
-        return (
-          <div className="editable-row-operations">
-            {
-              editable ?
-                <span>
-                  <a style={{ marginRight: '8px' }} onClick={() => this.save(record.key)}>Save</a>
-                  <a onClick={() => this.cancel(record.key)}>Cancel</a>
-                </span>
-                : <a onClick={() => this.edit(record.key)}>Edit</a>
-            }
-          </div>
-        );
-      },
+      width: '15%',
+      render: ({ productId }) => (
+        <Popconfirm title="Are you sure delete this product permanently?"
+          onConfirm={() => this.confirmDelete(productId)} onCancel={this.cancelDelete}
+          okText="Yes" cancelText="No">
+          <Button icon="delete" />
+        </Popconfirm>
+      )
     }];    
     this.state = { data: [] };
   }
 
-  renderColumns(text, record, column) {
-    return (
-      <EditableCell
-        editable={record.editable}
-        value={text}
-        onChange={value => this.handleChange(value, record.key, column)}
-      />
-    );
+  onCellChange = (key, dataIndex) => {
+    return (value) => {
+      const data = [...this.state.data];
+      const target = data.find(item => item.key === key);
+      if (target) {
+        target[dataIndex] = value;
+        this.setState({ data });
+        const productId = target['productId'];
+        const deviceId = this.props.deviceId;
+        this.props.editProductLocation(deviceId, productId, value, this.props.userToken);
+      }
+    };
   }
 
-  handleChange(value, key, column) {
-    const newData = [...this.state.data];
-    const target = newData.filter(item => key === item.key)[0];
-    if (target) {
-      target[column] = value;
-      this.setState({ data: newData });
-    }
+  confirmDelete(productId) {
+    this.props.deleteProduct(this.props.deviceId, productId, this.props.userToken);
   }
 
-  edit(key) {
-    const newData = [...this.state.data];
-    const target = newData.filter(item => key === item.key)[0];
-    if (target) {
-      target.editable = true;
-      this.setState({ data: newData });
-    }
-  }
-
-  save(key) {
-    const newData = [...this.state.data];
-    const target = newData.filter(item => key === item.key)[0];
-    if (target) {
-      delete target.editable;
-      this.setState({ data: newData });
-      this.cacheData = newData.map(item => ({ ...item }));
-    }
-  }
-
-  cancel(key) {
-    const newData = [...this.state.data];
-    const target = newData.filter(item => key === item.key)[0];
-    if (target) {
-      Object.assign(target, this.cacheData.filter(item => key === item.key)[0]);
-      delete target.editable;
-      this.setState({ data: newData });
-    }
+  cancelDelete() {
+    return;
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       data: nextProps.data.map(item => ({ ...item, key: item.productId }))
     });
-    this.cacheData = this.state.data.map(item => ({ ...item }));
   }
 
   render() {
     return(
       <div className='product-listing-table'>
         <Table bordered dataSource={this.state.data} columns={this.columns}
-          title={() => <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+          title={() => <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
           List of Products
           </div>} pagination={false}/>
       </div>
@@ -123,4 +85,21 @@ class ProductListingTable extends Component {
   }
 }
 
-export default ProductListingTable;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    editProductLocation: (deviceId, productId, value, token) => {
+      dispatch(editProductLocation(deviceId, productId, value, token))
+    },
+    deleteProduct: (deviceId, productId, token) => {
+      dispatch(deleteProduct(deviceId, productId, token))
+    }
+  }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    userToken: state.userToken
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListingTable);

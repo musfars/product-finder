@@ -5,11 +5,10 @@ import {
   loadToken,
   loadUserState
 } from '../utils/storageUtils';
-
 const Config = require('../config');
 const url = Config.baseUrl;
 
-const setUserToken = () => {
+export const setUserToken = () => {
   const token = loadToken();
   return {
     type: 'GET_USER_TOKEN',
@@ -40,7 +39,7 @@ export const fetchUserToken = (googleResponse, showInfo, routeToHome, alexaParam
           };
           saveUserDetails(response.data.token, userDetails);
           dispatch(userLogInStatus());
-          // dispatch(setUserToken());
+          dispatch(setUserToken());
           routeToHome.push('/home');
         }
       }
@@ -65,7 +64,7 @@ const logOutSuccess = () => ({
   type: 'USER_LOGGED_OUT'
 });
 
-export const logOutUser = (dispatch) => {
+export const logOutUser = () => (dispatch) => {
   removeUserDetails();
   dispatch(logOutSuccess());
 }

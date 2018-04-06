@@ -1,4 +1,5 @@
 import axios from 'axios';
+import returnHeader from '../utils/returnHeader';
 const Config = require('../config');
 const url = Config.baseUrl;
 
@@ -11,13 +12,16 @@ const addProductToListSuccess = (obj) => ({
   payload: obj
 });
 
-export const addProductToList = (productData) => {
+export const addProductToList = (productData, token) => {
   return (dispatch) => {
-    axios.post(url + '/product/add', productData )
+    axios.post(url + '/product/add', productData ,
+      returnHeader(token))
       .then((response) => {
+        console.log(response)
         dispatch(addProductToListSuccess(productData.productObj));
       })
       .catch((error) => {
+        console.log(error)
         dispatch(addProductToListFailure());
       });
   }

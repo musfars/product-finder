@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import EditableCell from '../EditableCell';
-import { Button, Table} from 'antd';
+import { Button, Table, Popconfirm, message} from 'antd';
 import { connect } from 'react-redux';
 import { editDeviceName } from '../../actions/editDeviceName';
+import { deRegisterDevice } from '../../actions/deRegisterDevice';
 import './alexa-listing-table.css';
 
 class AlexaListingTable extends Component {
@@ -22,20 +23,32 @@ class AlexaListingTable extends Component {
     }, {
       title: 'Device ID',
       dataIndex: 'deviceId',
+      width: '40%',
       align: 'center',
+      render: str => <div title={str}>{str.slice(0,30) + '...'}</div>
     }, {
-      title: 'Explore ',
-      width: '15%',
+      title: 'Actions ',
+      width: '30%',
       align: 'center',
-      render: ({ deviceId }) => <Button icon="folder-open" href={`/details/${deviceId}`} />
+      render: ({ deviceId }) =>
+        <div>
+          <Button icon="folder-open" href={`/details/${deviceId}`}
+            style={{ marginRight: '16px' }}/>
+          <Popconfirm title="Are you sure deregister this device permanently?"
+            onConfirm={() => this.confirmDelete(deviceId)} onCancel={this.cancelDelete}
+            okText="Yes" cancelText="No">
+              <Button>Deregister</Button>
+          </Popconfirm>
+        </div>
     }];
 
     this.state = {
       dataSource: []
     };
   }
-
+  
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
     this.setState({
       dataSource: nextProps.alexaListing.map(item => ({ ...item, key: item.deviceId }))
     });
@@ -49,11 +62,20 @@ class AlexaListingTable extends Component {
         target[dataIndex] = value;
         this.setState({ dataSource });
         const deviceId = target['deviceId'];
-        this.props.editDeviceName(deviceId,value);
+        const token = this.props.userToken;
+        this.props.editDeviceName(deviceId,value, token);
       }
     };
   }
 
+  confirmDelete(deviceId) {
+    this.props.deRegisterDevice(deviceId);
+  }
+
+  cancelDelete() {
+    return;
+  }
+  
   render() {
     const columns = this.columns;
     return (
@@ -69,10 +91,19 @@ class AlexaListingTable extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    editDeviceName: (deviceId, value) => {
-      dispatch(editDeviceName(deviceId, value))
+    editDeviceName: (deviceId, value, token) => {
+      dispatch(editDeviceName(deviceId, value, token))
+    },
+    deRegisterDevice: (deviceId) => {
+      dispatch(deRegisterDevice(deviceId))
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(AlexaListingTable);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    userToken: state.userToken
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AlexaListingTable);

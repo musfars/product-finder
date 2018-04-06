@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 import GoogleSignIn from '../GoogleSignIn';
 import AlexaListingPage from '../AlexaListingPage';
@@ -18,6 +19,7 @@ class SiteLayout extends Component {
           <Route path='/home'
             component={() => (<AlexaListingPage />)} />
           <Route path='/details/:id' component={() => (<ProductListingPage/>)} />
+          <Route component={() => <Redirect to='/'/>}/>
         </Switch>
       </Router>
     );
