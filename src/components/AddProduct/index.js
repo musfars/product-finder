@@ -48,6 +48,10 @@ const CollectionCreateForm = Form.create()(
 );
 
 class AddProduct extends Component {
+  constructor() {
+    super();
+    this.uniqueProductInfo = this.uniqueProductInfo.bind(this);
+  }
   state = {
     visible: false,
   };
@@ -72,7 +76,7 @@ class AddProduct extends Component {
         }
       }
       const token = this.props.userToken;
-      this.props.addProductToList(productData, token);
+      this.props.addProductToList(productData, token, this.uniqueProductInfo);
       form.resetFields();
       this.setState({ visible: false });
     });
@@ -80,6 +84,18 @@ class AddProduct extends Component {
   saveFormRef = (formRef) => {
     this.formRef = formRef;
   }
+  uniqueProductInfo() {
+    Modal.info({
+      title: 'DUPLICATE PRODUCT',
+      content: (
+        <div>
+          <p>Product Id and Product Name must be unique</p>
+        </div>
+      ),
+      onOk() { },
+    });
+  }
+
   render() {
     return (
       <div>
@@ -99,8 +115,8 @@ class AddProduct extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addProductToList: (productData, token) => {
-      dispatch(addProductToList(productData, token))
+    addProductToList: (productData, token, uniqueProductInfo) => {
+      dispatch(addProductToList(productData, token, uniqueProductInfo))
     }
   }
 }

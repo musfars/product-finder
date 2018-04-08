@@ -12,13 +12,17 @@ const addProductToListSuccess = (obj) => ({
   payload: obj
 });
 
-export const addProductToList = (productData, token) => {
+export const addProductToList = (productData, token, uniqueProductInfo) => {
   return (dispatch) => {
     axios.post(url + '/product/add', productData ,
       returnHeader(token))
       .then((response) => {
-        console.log(response)
-        dispatch(addProductToListSuccess(productData.productObj));
+        if(response.data.status === 409) {
+          uniqueProductInfo();
+        }
+        else {
+          dispatch(addProductToListSuccess(productData.productObj));
+        }
       })
       .catch((error) => {
         console.log(error)

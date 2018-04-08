@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Input, Button, Popconfirm } from 'antd';
+import { Table, Button, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 import { editProductLocation } from '../../actions/editProductLocation';
 import { deleteProduct } from '../../actions/deleteProduct'; 

@@ -63,7 +63,8 @@ class GoogleSignIn extends Component {
       return(
         <div className='google-login-page'>
           <div className='google-login-button-container'>
-            <img src={bag} className='bag-image'/>
+            <img src={bag} className='bag-image'
+              alt='Bag-Icon'/>
             <div className='title'>Alexa product finder</div>
               <GoogleLogin
                 className='google-login-button'

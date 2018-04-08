@@ -33,7 +33,8 @@ class UserDetailsBar extends Component {
     return (
       <div className='bar-container'>
         <div className='header-logo'>
-          <img src={bag} className='bag-image-header' />
+          <img src={bag} className='bag-image-header'
+            alt='Bag-Icon'/>
           <div className='header-text'>Alexa product finder</div>
         </div> 
         <div className='header-user'>
