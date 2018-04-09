@@ -14,8 +14,8 @@ const deleteProductSuccess = (productId) => ({
 
 export const deleteProduct = (deviceId, productId, token) => {
   return (dispatch) => {
-    axios.post(url + '/product/delete?deviceId=' + deviceId + '&productId=' + productId
-      // returnHeader(token)
+    axios.post(url + '/product/delete?deviceId=' + deviceId + '&productId=' + productId,
+      {}, returnHeader(token)
     )
       .then((response) => {
         dispatch(deleteProductSuccess(productId));

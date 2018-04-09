@@ -17,8 +17,8 @@ export const editProductLocation = (deviceId, productId, value, token) => {
       "deviceId": deviceId,
       "productId": productId,
       "location": value
-    }
-      // returnHeader(token)
+    },
+      returnHeader(token)
     )
       .then((response) => {
         dispatch(editProductLocationSuccess());

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import EditableCell from '../EditableCell';
-import { Button, Table, Popconfirm, message} from 'antd';
+import { Button, Table, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 import { editDeviceName } from '../../actions/editDeviceName';
 import { deRegisterDevice } from '../../actions/deRegisterDevice';

@@ -14,8 +14,8 @@ const deRegisterDeviceSuccess = (deviceId) => ({
 
 export const deRegisterDevice = (deviceId, token) => {
   return (dispatch) => {
-    axios.post(url + '/device/delete?deviceId=' + deviceId 
-      // returnHeader(token)
+    axios.post(url + '/device/delete?deviceId=' + deviceId, 
+      {}, returnHeader(token)
     )
       .then((response) => {
         dispatch(deRegisterDeviceSuccess(deviceId));
