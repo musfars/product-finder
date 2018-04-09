@@ -15,7 +15,6 @@ export const listAlexa = (userId) => {
   return (dispatch) => {
     axios.get(url + '/device/list?userId=' + userId)
     .then((response) => {
-      console.log(response)
       dispatch(fetchListSuccess(response.data.deviceList));
     })
     .catch((error) => {

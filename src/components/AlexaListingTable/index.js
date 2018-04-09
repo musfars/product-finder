@@ -48,7 +48,6 @@ class AlexaListingTable extends Component {
   }
   
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     this.setState({
       dataSource: nextProps.alexaListing.map(item => ({ ...item, key: item.deviceId }))
     });
@@ -69,7 +68,7 @@ class AlexaListingTable extends Component {
   }
 
   confirmDelete(deviceId) {
-    this.props.deRegisterDevice(deviceId);
+    this.props.deRegisterDevice(deviceId, this.props.userToken);
   }
 
   cancelDelete() {
@@ -94,8 +93,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     editDeviceName: (deviceId, value, token) => {
       dispatch(editDeviceName(deviceId, value, token))
     },
-    deRegisterDevice: (deviceId) => {
-      dispatch(deRegisterDevice(deviceId))
+    deRegisterDevice: (deviceId, token) => {
+      dispatch(deRegisterDevice(deviceId, token))
     }
   }
 }
