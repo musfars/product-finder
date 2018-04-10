@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Input, Icon } from 'antd';
+import Input from 'antd/lib/input';
+import Icon from 'antd/lib/icon';
 
 class EditableCell extends Component {
   state = {

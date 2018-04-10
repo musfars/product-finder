@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import EditableCell from '../EditableCell';
-import { Button, Table, Popconfirm } from 'antd';
+import Button from 'antd/lib/button';
+import Table from 'antd/lib/table';
+import Popconfirm from 'antd/lib/popconfirm';
 import { connect } from 'react-redux';
 import { editDeviceName } from '../../actions/editDeviceName';
 import { deRegisterDevice } from '../../actions/deRegisterDevice';
@@ -26,14 +28,22 @@ class AlexaListingTable extends Component {
       width: '40%',
       align: 'center',
       render: str => <div title={str}>{str.slice(0,30) + '...'}</div>
-    }, {
-      title: 'Actions ',
-      width: '30%',
+    },{
+      title: 'Explore',
+      width: '15%',
       align: 'center',
       render: ({ deviceId }) =>
         <div>
           <Button icon="folder-open" href={`/details/${deviceId}`}
-            style={{ marginRight: '16px' }}/>
+            style={{ marginRight: '16px' }} />
+        </div>
+    }
+    ,{
+      title: 'Actions',
+      width: '15%%',
+      align: 'center',
+      render: ({ deviceId }) =>
+        <div>
           <Popconfirm title="Are you sure deregister this device permanently?"
             onConfirm={() => this.confirmDelete(deviceId)} onCancel={this.cancelDelete}
             okText="Yes" cancelText="No">

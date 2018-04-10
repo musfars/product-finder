@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Popover, Button } from 'antd';
+import Popover from 'antd/lib/popover';
+import Button from 'antd/lib/button';
 import { withRouter } from 'react-router-dom';
 import { logOutUser } from '../../actions/userLogin';
 import { setUserToken } from '../../actions/userLogin';

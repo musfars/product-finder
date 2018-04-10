@@ -3,7 +3,8 @@ import GoogleLogin from 'react-google-login';
 import { withRouter, Redirect } from 'react-router-dom';
 import { fetchUserToken } from '../../actions/userLogin';
 import { connect } from 'react-redux';
-import { Modal } from 'antd';
+import Spinner from '../Spinner';
+import Modal from 'antd/lib/modal';
 import bag from './bag.svg';
 import './GoogleSignIn.css';
 
@@ -11,13 +12,12 @@ class GoogleSignIn extends Component {
   constructor(props) {
     super(props);
     this.responseGoogle = this.responseGoogle.bind(this);
-    this.info = this.info.bind(this);
     this.getSearchParameters = this.getSearchParameters.bind(this);
     this.transformToAssocArray = this.transformToAssocArray.bind(this);
   }
 
   responseGoogle(response) {
-    this.props.fetchUserToken(response, this.info, this.props.history, this.alexaParams);
+    this.props.fetchUserToken(response, this.props.history, this.alexaParams);
   }
 
   getSearchParameters() {
@@ -35,7 +35,7 @@ class GoogleSignIn extends Component {
     return params;
 }
 
-  info() {
+  unauthorisedUserInfo() {
     Modal.info({
       title: 'UNAUTHORIZED USER',
       content: (
@@ -72,6 +72,14 @@ class GoogleSignIn extends Component {
                 onFailure={this.responseGoogle}
               />
           </div>
+          {
+            this.props.userDetails === 'LOADING' &&
+            <Spinner/>
+          }
+          {
+            this.props.userDetails === 'UNAUTHORISED' &&
+            this.unauthorisedUserInfo()
+          }
         </div>
       )
     }
@@ -80,8 +88,8 @@ class GoogleSignIn extends Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchUserToken: (googleResponse, showInfo, routeToHome, alexaParams) => {
-      dispatch(fetchUserToken(googleResponse, showInfo, routeToHome, alexaParams))
+    fetchUserToken: (googleResponse, routeToHome, alexaParams) => {
+      dispatch(fetchUserToken(googleResponse, routeToHome, alexaParams))
     }
   }
 }

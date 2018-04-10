@@ -8,6 +8,7 @@ import {
 const Config = require('../config');
 const url = Config.baseUrl;
 
+
 export const setUserToken = () => {
   const token = loadToken();
   return {
@@ -16,8 +17,9 @@ export const setUserToken = () => {
   };
 };
 
-export const fetchUserToken = (googleResponse, showInfo, routeToHome, alexaParams) => {
+export const fetchUserToken = (googleResponse, routeToHome, alexaParams) => {
   return (dispatch) => {
+    dispatch(userLogInStart());
     var isAlexa = Object.keys(alexaParams).length !== 0 ? true : false;
     axios.post(url + '/user/login', {
         tokenId: googleResponse.tokenId,
@@ -44,7 +46,8 @@ export const fetchUserToken = (googleResponse, showInfo, routeToHome, alexaParam
         }
       }
       else if (response.data.status === 403) {
-        showInfo();
+        // showInfo();
+        dispatch(userUnauthorised());
       }
     })
     .catch(() => {
@@ -64,7 +67,15 @@ const logOutSuccess = () => ({
   type: 'USER_LOGGED_OUT'
 });
 
+const userLogInStart = () => ({
+  type: 'USER_LOGIN_START'
+});
+
 export const logOutUser = () => (dispatch) => {
   removeUserDetails();
   dispatch(logOutSuccess());
 }
+
+const userUnauthorised = () => ({
+  type: 'USER_UNAUTHORISED'
+})

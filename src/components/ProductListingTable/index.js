@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Table, Button, Popconfirm } from 'antd';
+import Button from 'antd/lib/button';
+import Table from 'antd/lib/table';
+import Popconfirm from 'antd/lib/popconfirm';
 import { connect } from 'react-redux';
 import { editProductLocation } from '../../actions/editProductLocation';
 import { deleteProduct } from '../../actions/deleteProduct'; 

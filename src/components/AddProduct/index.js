@@ -21,21 +21,35 @@ const CollectionCreateForm = Form.create()(
           <Form layout="vertical">
             <FormItem label="Product ID">
               {getFieldDecorator('productId', {
-                rules: [{ required: true, message: 'Please input the id of the product!' }],
+                rules: [{
+                  required: true,
+                  message: 'Please input the id of the product!'
+                },{
+                  pattern: /^[a-zA-Z0-9]*$/,
+                  message: 'Must be alphanumeric'
+                }]
               })(
                 <Input />
                 )}
             </FormItem>
             <FormItem label="Product Name">
               {getFieldDecorator('name', {
-                rules: [{ required: true, message: 'Please input the name of the product!' }],
+                rules: [{ required: true, message: 'Please input the name of the product!' },
+                  , {
+                    pattern: /^[a-zA-Z0-9\s]*$/,
+                    message: 'Must be alphanumeric'
+                  }],
               })(
                 <Input />
                 )}
             </FormItem>
             <FormItem label="Location">
               {getFieldDecorator('location', {
-                rules: [{ required: true, message: 'Please input the location of the product!' }],
+                rules: [{ required: true, message: 'Please input the location of the product!' },
+                  , {
+                    pattern: /^[a-zA-Z0-9\s]*$/,
+                    message: 'must be alphanumeric'
+                  }],
               })(
                 <Input />
                 )}
