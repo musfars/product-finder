@@ -1,0 +1,15 @@
+version: '2' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  product-finder-alexa: # name of the first service
+    container_name: productfinder-alexa
+    build: . # specify the directory of the Dockerfile
+    ports:
+      - "7002:7002"
+    networks:
+      - productfinder-network
+    environment: 
+      NODE_ENV: "staging"  
+networks:
+  productfinder-network:
